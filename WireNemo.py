@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-
 # Form implementation generated from reading ui file 'WireNemo.ui'
 #
-# Created by: PyQt5 UI code generator 5.6
+# Created by:Fouad Ayman , Fakhr El-Deen , Kamel Alaa ,Abdelwahab mohammed
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -69,10 +68,30 @@ class Ui_MainWindow(object):
         self.capture_stop_btn.clicked.connect(self.btn_click)
        
     def btn_click(self):
-        _translate = QtCore.QCoreApplication.translate
-        self.capture_stop_btn.setText(_translate("MainWindow", "Stop"))
-        self.all_txt_browser.setText(self.filter_le.text())
-
+        _translate = QtCore.QCoreApplication.translate 
+        if self.capture_stop_btn.text() == "Capture":
+            self.capture_stop_btn.setText(_translate("MainWindow", "Stop"))
+            if self.filter_le.text() == "TCP":
+                self.all_txt_browser.setText("Add all information about TCP packets here as a string")
+                self.header_txt_browser.setText("Add all header packets here as a string")
+                self.hex_txt_browser.setText("Add all hex as string")                
+               
+            elif self.filter_le.text() =="UDP":
+                self.all_txt_browser.setText("Add all information about UDP packets here as a string")
+                self.header_txt_browser.setText("Add all header packets here as a string")
+                self.hex_txt_browser.setText("Add all hex as string")                
+               
+            else:
+                self.all_txt_browser.setText("Add all information about packets here as a string")
+                self.header_txt_browser.setText("Add all header packets here as a string")
+                self.hex_txt_browser.setText("Add all hex as string")
+           
+        else:
+            self.capture_stop_btn.setText(_translate("MainWindow", "Capture"))
+            #put Stop sniff function here 
+            self.all_txt_browser.setText("fouad")
+            self.header_txt_browser.setText("ayman")
+            self.hex_txt_browser.setText("fouad")        
 
 
 if __name__ == "__main__":
@@ -83,4 +102,3 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
-
