@@ -6,7 +6,18 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import QThread
+class SniffThread(QThread):
 
+    def __init__(self):
+        QThread.__init__(self)
+
+    def __del__(self):
+        self.wait()
+
+    def run(self):
+        #put Stop sniff function here w
+        #function el sniff el mafrod teb2a hna
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -88,7 +99,8 @@ class Ui_MainWindow(object):
            
         else:
             self.capture_stop_btn.setText(_translate("MainWindow", "Capture"))
-            #put Stop sniff function here 
+            self.myThread = SniffThread()
+            self.myThread.start()
             self.all_txt_browser.setText("fouad")
             self.header_txt_browser.setText("ayman")
             self.hex_txt_browser.setText("fouad")        
