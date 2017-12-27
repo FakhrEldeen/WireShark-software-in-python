@@ -7,6 +7,22 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QThread
+from scapy.all import *
+import datetime
+
+packetlist = []
+stopFlag = False
+showlist =[]
+
+def sniffed_packet (pkt): 
+    lst = str(pkt[IP].src)+"   "+str(pkt[IP].dst)+"   "+str(pkt[IP].proto)+"   "+str(pkt[IP].len)+"   "+str(datetime.datetime.fromtimestamp(pkt.time))
+    packetlist.append(lst) 
+    show = pkt.showdump()   #version of packet.show() function that allow return 
+    showlist.append(show)
+    
+def stop():
+    return stopFlag
+    
 class SniffThread(QThread):
 
     def __init__(self):
@@ -18,6 +34,10 @@ class SniffThread(QThread):
     def run(self):
         #put Stop sniff function here w
         #function el sniff el mafrod teb2a hna
+         try:
+            sniff(prn = sniffed_packet,stop_callback=stop())
+        except :
+            pass
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -80,6 +100,7 @@ class Ui_MainWindow(object):
        
     def btn_click(self):
         _translate = QtCore.QCoreApplication.translate 
+        SniffThread.run(QThread)
         if self.capture_stop_btn.text() == "Capture":
             self.capture_stop_btn.setText(_translate("MainWindow", "Stop"))
             if self.filter_le.text() == "TCP":
@@ -101,9 +122,7 @@ class Ui_MainWindow(object):
             self.capture_stop_btn.setText(_translate("MainWindow", "Capture"))
             self.myThread = SniffThread()
             self.myThread.start()
-            self.all_txt_browser.setText("fouad")
-            self.header_txt_browser.setText("ayman")
-            self.hex_txt_browser.setText("fouad")        
+            stopFlag =True      
 
 
 if __name__ == "__main__":
