@@ -104,16 +104,48 @@ class Ui_MainWindow(object):
         if self.capture_stop_btn.text() == "Capture":
             self.capture_stop_btn.setText(_translate("MainWindow", "Stop"))
             if self.filter_le.text() == "TCP":
+                
+
+                 for j in packetlist :
+                        self.all_txt_browser.append(j)
+                 for i in range(len(showlist)):
+                        self.header_txt_browser.append(showlist[i])
+                  for m in hexlist :
+                      self.hex_txt_browser.append(m)
+
+        elif self.filter_le.text() =="udp":
+                for j in packetlist :
+                    self.all_txt_browser.append(j)
+                for i in range(len(showlist)):
+                    self.header_txt_browser.append(showlist[i])
+                for m in hexlist :
+                    self.hex_txt_browser.append(m)
+    
+        else:
+                for j in packetlist :
+                    self.all_txt_browser.append(j)
+                for i in range(len(showlist)):
+                     self.header_txt_browser.append(showlist[i])
+                for m in hexlist :
+                     self.hex_txt_browser.append(m)
+
+        else:
+                self.capture_stop_btn.setText(_translate("MainWindow", "Capture"))
+                #put Stop sniff function here
+                self.myThread = SniffThread()
+                self.myThread.start()
+                 stopFlag =True
+
                 self.all_txt_browser.setText("Add all information about TCP packets here as a string")
                 self.header_txt_browser.setText("Add all header packets here as a string")
                 self.hex_txt_browser.setText("Add all hex as string")                
                
-            elif self.filter_le.text() =="UDP":
+          elif self.filter_le.text() =="UDP":
                 self.all_txt_browser.setText("Add all information about UDP packets here as a string")
                 self.header_txt_browser.setText("Add all header packets here as a string")
                 self.hex_txt_browser.setText("Add all hex as string")                
                
-            else:
+          else:
                 self.all_txt_browser.setText("Add all information about packets here as a string")
                 self.header_txt_browser.setText("Add all header packets here as a string")
                 self.hex_txt_browser.setText("Add all hex as string")
