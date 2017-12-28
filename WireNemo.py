@@ -15,7 +15,8 @@ stopFlag = False
 showlist =[]
 
 def sniffed_packet (pkt): 
-    lst = str(pkt[IP].src)+"   "+str(pkt[IP].dst)+"   "+str(pkt[IP].proto)+"   "+str(pkt[IP].len)+"   "+str(datetime.datetime.fromtimestamp(pkt.time))
+    table = {num:name[8:] for name,num in vars(socket).items() if name.startswith("IPPROTO")}
+    lst = str(pkt[IP].src)+"   "+str(pkt[IP].dst)+"   "+str(table[pkt[IP].proto])+"   "+str(pkt[IP].len)+"   "+str(datetime.datetime.fromtimestamp(pkt.time))
     packetlist.append(lst) 
     show = pkt.showdump()   #version of packet.show() function that allow return 
     showlist.append(show)
